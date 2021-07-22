@@ -6,7 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Button, Icon} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
-import {TYPOGRAPHY} from '../styles/typography';
+import {TYPOGRAPHY} from '../assets/styles/typography';
 
 import OpenScreen from '../pages/Open';
 import LoginScreen from '../pages/Login';

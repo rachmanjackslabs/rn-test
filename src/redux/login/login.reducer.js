@@ -1,7 +1,7 @@
 import {LOGIN} from './login.styles';
 
 const INITIAL_STATE = {
-  data: null,
+  login: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -9,7 +9,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOGIN:
       return {
         ...state,
-        data: action.payload,
+        login: action.payload,
       };
     default:
       return state;

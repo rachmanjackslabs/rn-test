@@ -6,13 +6,20 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import {TYPOGRAPHY} from '../styles/typography';
+import {TYPOGRAPHY} from '../assets/styles/typography';
 
-export default function Buttons({onPress, title, containerStyle, ...props}) {
+export default function Buttons({
+  onPress,
+  title,
+  buttonStyle,
+  titleStyle,
+  containerStyle,
+  ...props
+}) {
   return (
     <Button
-      buttonStyle={[styles.button]}
-      titleStyle={[styles.title]}
+      buttonStyle={[styles.button, buttonStyle]}
+      titleStyle={[styles.title, titleStyle]}
       onPress={onPress}
       containerStyle={[styles.container, containerStyle]}
       title={title}

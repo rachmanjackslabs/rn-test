@@ -1,10 +1,16 @@
+import instance from '../../services';
 import {LOGIN} from './login.styles';
 
-export const login = value => dispatch => {
-  dispatch({
-    type: LOGIN,
-    payload: value,
-  });
+export const login = payload => async dispatch => {
+  try {
+    const res = await instance.post('/login', payload);
+    dispatch({
+      type: LOGIN,
+      payload: res.data.data,
+    });
 
-  return;
+    return res;
+  } catch (error) {
+    return error.response;
+  }
 };

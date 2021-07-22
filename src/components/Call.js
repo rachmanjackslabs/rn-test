@@ -3,16 +3,18 @@ import {Linking, Text} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import {TYPOGRAPHY} from '../styles/typography';
+import {TYPOGRAPHY} from '../assets/styles/typography';
+
+const callNumber = '6697 5686';
 
 export default function Call() {
   const makeCall = () => {
-    Linking.openURL('tel:6697 5686');
+    Linking.openURL(`tel:${callNumber}`);
   };
 
   return (
     <Text style={styles.footerText} onPress={makeCall}>
-      need an account? Call 6697 5686
+      need an account? Call {callNumber}
     </Text>
   );
 }

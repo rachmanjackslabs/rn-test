@@ -126,7 +126,6 @@ export default function CheckpointScreen({navigation}) {
           iconRight={true}
           onPress={() => {
             navigation.navigate('Schedule');
-            console.tron.log({payload: cameraState.images});
           }}
         />
       </TouchableOpacity>

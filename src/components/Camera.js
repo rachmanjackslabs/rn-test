@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   View,
@@ -16,6 +15,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import {TYPOGRAPHY} from '../assets/styles/typography';
 
 export default function TakePictureScreen({initialProps, route, navigation}) {
   const [
@@ -43,9 +44,11 @@ export default function TakePictureScreen({initialProps, route, navigation}) {
       dataImage,
       siteType,
     };
-    dispatch(takeImage(data));
-    setDataImage(null);
-    navigation.navigate('Checkpoint');
+
+    dispatch(takeImage(data)).then(() => {
+      setDataImage(null);
+      navigation.navigate('Checkpoint');
+    });
   };
 
   return (
@@ -56,11 +59,11 @@ export default function TakePictureScreen({initialProps, route, navigation}) {
           autoFocusPointOfInterest={autoFocusPoint.normalized}
           type={type}
           ratio={ratio}
-          style={{flex: 0.95}}
+          style={styles.camera}
           autoFocus={autoFocus}
         />
       ) : (
-        <View style={{alignItems: 'center', flex: 0.95}}>
+        <View style={styles.containerImage}>
           <Image
             source={{
               uri: dataImage.uri,
@@ -71,15 +74,15 @@ export default function TakePictureScreen({initialProps, route, navigation}) {
         </View>
       )}
       <View style={styles.footer}>
-        <View style={{flex: 0.2}} />
-        <View>
+        <View style={styles.empty} />
+        <>
           {dataImage === null ? (
             <TouchableOpacity onPress={takePictures} style={styles.capture}>
               <Icon
                 name="camera"
                 size={25}
                 type="ionicon"
-                color="#ED9923"
+                color={TYPOGRAPHY.COLOR.Default}
                 reverse
               />
             </TouchableOpacity>
@@ -91,16 +94,13 @@ export default function TakePictureScreen({initialProps, route, navigation}) {
                 name="camera"
                 size={25}
                 type="ionicon"
-                color="#ED9923"
+                color={TYPOGRAPHY.COLOR.Default}
                 reverse
               />
-              <Text
-                style={{fontSize: 9, fontFamily: 'Montserrat', color: 'white'}}>
-                RE-CAPTURE
-              </Text>
+              <Text style={styles.capture}>RE-CAPTURE</Text>
             </TouchableOpacity>
           )}
-        </View>
+        </>
         <View style={styles.nextContainer}>
           {dataImage !== null && (
             <TouchableOpacity onPress={takeNextImage}>
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nextButton: {
-    fontFamily: 'Bebas Neue',
+    fontFamily: TYPOGRAPHY.FONT.BebasNeue,
     fontSize: 14,
-    color: 'white',
+    color: TYPOGRAPHY.COLOR.White,
   },
   nextContainer: {
     flex: 0.2,
@@ -132,6 +132,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#3b3733',
+    backgroundColor: TYPOGRAPHY.COLOR.Primary,
+  },
+  camera: {
+    flex: 0.95,
+  },
+  containerImage: {
+    alignItems: 'center',
+    flex: 0.95,
+  },
+  capture: {
+    fontSize: 9,
+    fontFamily: TYPOGRAPHY.FONT.Montserrat,
+    color: TYPOGRAPHY.COLOR.White,
+  },
+  empty: {
+    flex: 0.2,
   },
 });

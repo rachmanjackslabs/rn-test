@@ -5,4 +5,6 @@ export const takeImage = value => dispatch => {
     type: TAKE,
     payload: value,
   });
+
+  return;
 };

@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Linking} from 'react-native';
+import {Alert, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {Text, Input, CheckBox, Icon} from 'react-native-elements';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Formik} from 'formik';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as yup from 'yup';
-import {useDispatch} from 'react-redux';
-import {login} from '../redux/login/login.action';
+import {sha256} from 'js-sha256';
 
-import Buttons from '../components/Button';
-import Call from '../components/Call';
-import {TYPOGRAPHY} from '../styles/typography';
+import styles from './Style';
+import {login} from '../../redux/login/login.action';
+
+import Buttons from '../../components/Button';
+import Call from '../../components/Call';
+import {TYPOGRAPHY} from '../../assets/styles/typography';
 
 const loginValidationSchema = yup.object().shape({
   email: yup
@@ -23,18 +25,69 @@ const loginValidationSchema = yup.object().shape({
     .required('Password is required'),
 });
 
+const FormLogin = ({onChange, onBlur, value, errors, touched, ...props}) => (
+  <>
+    <Input
+      inputStyle={styles.loginInputStyle}
+      inputContainerStyle={styles.loginInputContainer}
+      onChangeText={onChange}
+      onBlur={onBlur}
+      value={value}
+      {...props}
+    />
+
+    {errors && touched && <Text style={styles.invalidText}>{errors}</Text>}
+  </>
+);
+
+const catchError = ({data}) => {
+  let errMessage = '';
+  Object.keys(data.errors).map(val => {
+    errMessage = data.errors[val][0];
+  });
+
+  return Alert.alert(data.message, errMessage);
+};
+
 export default function LoginScreen({navigation}) {
   const [checked, setChecked] = useState(false);
   const [isPassword, setIsPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const loginFunction = values => {
-    dispatch(login(values)).then(() => {
-      navigation.navigate('Ready');
+    setLoading(true);
+
+    const payload = {
+      email: values.email,
+      password: sha256(values.password),
+    };
+
+    dispatch(login(payload)).then(response => {
+      const {data} = response;
+      if (data.success) {
+        navigation.navigate('Ready');
+      } else {
+        let errMessage = '';
+        Object.keys(data.errors).map(val => {
+          errMessage = data.errors[val][0];
+        });
+
+        Alert.alert(data.message, errMessage);
+      }
+      setLoading(false);
     });
   };
-  console.log(typeof navigation);
+
+  const handleIsPassword = () => {
+    setIsPassword(value => !value);
+  };
+
+  const handleRememberMe = () => {
+    setChecked(value => !value);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -45,8 +98,11 @@ export default function LoginScreen({navigation}) {
         </View>
         <Formik
           validationSchema={loginValidationSchema}
-          initialValues={{email: 'test@email.com', password: 'asdasdasd'}}
-          onSubmit={values => loginFunction(values)}>
+          initialValues={{
+            email: 'irwan@discoverydata.com.au',
+            password: '12345678',
+          }}
+          onSubmit={loginFunction}>
           {({
             handleChange,
             handleBlur,
@@ -54,25 +110,20 @@ export default function LoginScreen({navigation}) {
             values,
             errors,
             touched,
-            isValid,
           }) => (
             <>
               <View style={styles.loginInput}>
-                <Input
-                  inputStyle={styles.loginInputStyle}
-                  inputContainerStyle={styles.loginInputContainer}
-                  onChangeText={handleChange('email')}
+                <FormLogin
+                  onChange={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
+                  errors={errors.email}
+                  touched={touched.email}
                 />
-                {errors.email && touched.email && (
-                  <Text style={styles.invalidText}>{errors.email}</Text>
-                )}
-                <Input
-                  inputStyle={styles.loginInputStyle}
-                  inputContainerStyle={styles.loginInputContainer}
-                  onChangeText={handleChange('password')}
+                <FormLogin
+                  onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
+                  value={values.password}
                   secureTextEntry={isPassword}
                   rightIcon={
                     <Icon
@@ -80,24 +131,24 @@ export default function LoginScreen({navigation}) {
                       type="ionicon"
                       size={24}
                       color="white"
-                      onPress={() => setIsPassword(!isPassword)}
+                      onPress={handleIsPassword}
                     />
                   }
+                  errors={errors.password}
+                  touched={touched.password}
                 />
-                {errors.password && touched.password && (
-                  <Text style={styles.invalidText}>{errors.password}</Text>
-                )}
               </View>
               <CheckBox
                 title="REMEMBER ME?"
                 checked={checked}
-                onPress={() => setChecked(!checked)}
+                onPress={handleRememberMe}
                 containerStyle={styles.rememberContainer}
                 textStyle={styles.rememberText}
                 checkedColor={TYPOGRAPHY.COLOR.Default}
               />
-              <View style={{alignItems: 'center'}}>
+              <View style={styles.buttonContainer}>
                 <Buttons
+                  loading={loading}
                   title="LOGIN"
                   onPress={handleSubmit}
                   containerStyle={{width: wp('85%')}}
@@ -113,52 +164,3 @@ export default function LoginScreen({navigation}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: TYPOGRAPHY.COLOR.Primary,
-  },
-  content: {
-    flex: 0.9,
-    padding: 20,
-  },
-  contentHeader: {
-    alignItems: 'center',
-  },
-  footer: {
-    flex: 0.1,
-    borderTopColor: 'grey',
-    borderTopWidth: 1,
-    alignItems: 'center',
-  },
-  title: {
-    color: 'white',
-    paddingTop: hp('5%'),
-    fontFamily: TYPOGRAPHY.FONT.Playfair,
-  },
-  loginInput: {
-    marginTop: hp('5%'),
-  },
-  loginInputStyle: {
-    color: 'white',
-    fontFamily: TYPOGRAPHY.FONT.BebasNeue,
-  },
-  loginInputContainer: {
-    borderColor: 'white',
-  },
-  rememberContainer: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    marginLeft: 0,
-  },
-  rememberText: {
-    color: 'white',
-    fontFamily: TYPOGRAPHY.FONT.Montserrat,
-  },
-  invalidText: {
-    fontSize: 10,
-    color: 'red',
-    paddingLeft: 10,
-  },
-});
