@@ -6,13 +6,17 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export default function ButtonComponent({onPress, ...props}) {
+import {TYPOGRAPHY} from '../styles/typography';
+
+export default function Buttons({onPress, title, containerStyle, ...props}) {
   return (
     <Button
-      buttonStyle={[styles.button, props.buttonStyle]}
-      titleStyle={[styles.title, props.titleStyle]}
+      buttonStyle={[styles.button]}
+      titleStyle={[styles.title]}
       onPress={onPress}
-      containerStyle={[styles.container, props.containerStyle]}
+      containerStyle={[styles.container, containerStyle]}
+      title={title}
+      type="outline"
       {...props}
     />
   );
@@ -21,13 +25,13 @@ export default function ButtonComponent({onPress, ...props}) {
 const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
-    backgroundColor: '#ED9923',
+    backgroundColor: TYPOGRAPHY.COLOR.Default,
   },
   container: {
     width: wp('85%'),
   },
   title: {
-    color: 'white',
-    fontFamily: 'BebasNeue',
+    color: TYPOGRAPHY.COLOR.White,
+    fontFamily: TYPOGRAPHY.FONT.BebasNeue,
   },
 });

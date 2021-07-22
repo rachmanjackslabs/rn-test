@@ -1,18 +1,17 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet, Linking} from 'react-native';
+import {View, Image, Text, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import VersionCheck from 'react-native-version-check';
 
-import ButtonComponent from '../components/Button';
+import {TYPOGRAPHY} from '../styles/typography';
 
-export default function OpenScreen({navigation, route}) {
-  const makeCall = () => {
-    Linking.openURL('tel:6697 5686');
-  };
+import Buttons from '../components/Button';
+import Call from '../components/Call';
 
+export default function OpenScreen({navigation}) {
   const getStarted = () => {
     navigation.navigate('Login');
   };
@@ -23,27 +22,24 @@ export default function OpenScreen({navigation, route}) {
         <View style={styles.contentTop}>
           <Image
             style={styles.logo}
-            source={require('/Users/rachmanpratama/Documents/work/react-native/hernes/src/assets/images/logo.jpeg')}
+            source={require('../assets/images/logo.jpeg')}
           />
           <Image
             style={styles.title}
-            source={require('/Users/rachmanpratama/Documents/work/react-native/hernes/src/assets/images/logo-title.png')}
+            source={require('../assets/images/logo-title.png')}
           />
           <Text style={styles.text}>V {VersionCheck.getCurrentVersion()}</Text>
         </View>
         <View style={styles.contentBottom}>
-          <ButtonComponent
+          <Buttons
             title="GET STARTED"
-            type="outline"
             onPress={getStarted}
             containerStyle={{width: wp('85%')}}
           />
         </View>
       </View>
       <View style={styles.footer}>
-        <Text style={styles.text} onPress={makeCall}>
-          need an account? Call 6697 5686
-        </Text>
+        <Call />
       </View>
     </View>
   );
@@ -52,7 +48,7 @@ export default function OpenScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: TYPOGRAPHY.COLOR.Black,
   },
   content: {
     flex: 0.9,
@@ -74,9 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: 'white',
+    color: TYPOGRAPHY.COLOR.White,
     paddingTop: '5%',
-    fontFamily: 'Montserrat',
+    fontFamily: TYPOGRAPHY.FONT.Montserrat,
     fontSize: 12,
   },
   logo: {

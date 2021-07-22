@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Text, Input, CheckBox} from 'react-native-elements';
 
-import ButtonComponent from '../components/Button';
+import Buttons from '../components/Button';
 
 const questionList = [
   {
@@ -172,7 +172,7 @@ export default function VehicleScreen({navigation}) {
               paddingHorizontal: 20,
               paddingBottom: 30,
             }}>
-            <ButtonComponent
+            <Buttons
               title="SEE SCHEDULE"
               onPress={seeSchedule}
               iconRight={true}

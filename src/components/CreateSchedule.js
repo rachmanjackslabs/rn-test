@@ -17,7 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ButtonComponent from '../components/Button';
+import Buttons from '../components/Button';
 
 const {width} = Dimensions.get('screen');
 
@@ -121,7 +121,7 @@ export default function CreateScheduleScreen(props) {
             />
           </View>
         </View>
-        <ButtonComponent
+        <Buttons
           title="Create New Route"
           onPress={() => {
             setVisible(false);

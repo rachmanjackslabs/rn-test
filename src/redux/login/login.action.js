@@ -1,9 +1,10 @@
 import {LOGIN} from './login.styles';
 
-export const login = (value, navigation) => dispatch => {
+export const login = value => dispatch => {
   dispatch({
     type: LOGIN,
     payload: value,
   });
-  navigation.navigate('Ready');
+
+  return;
 };

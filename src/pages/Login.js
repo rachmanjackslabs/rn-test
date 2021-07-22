@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Linking} from 'react-native';
 import {Text, Input, CheckBox, Icon} from 'react-native-elements';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Formik} from 'formik';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as yup from 'yup';
 import {useDispatch} from 'react-redux';
 import {login} from '../redux/login/login.action';
 
-import ButtonComponent from '../components/Button';
+import Buttons from '../components/Button';
+import Call from '../components/Call';
+import {TYPOGRAPHY} from '../styles/typography';
 
 const loginValidationSchema = yup.object().shape({
   email: yup
@@ -23,19 +26,15 @@ const loginValidationSchema = yup.object().shape({
 export default function LoginScreen({navigation}) {
   const [checked, setChecked] = useState(false);
   const [isPassword, setIsPassword] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
 
-  const makeCall = () => {
-    Linking.openURL('tel:6697 5686');
-  };
-
   const loginFunction = values => {
-    dispatch(login(values, navigation));
+    dispatch(login(values)).then(() => {
+      navigation.navigate('Ready');
+    });
   };
-
+  console.log(typeof navigation);
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -95,19 +94,21 @@ export default function LoginScreen({navigation}) {
                 onPress={() => setChecked(!checked)}
                 containerStyle={styles.rememberContainer}
                 textStyle={styles.rememberText}
-                checkedColor="#c7976b"
+                checkedColor={TYPOGRAPHY.COLOR.Default}
               />
               <View style={{alignItems: 'center'}}>
-                <ButtonComponent title="LOGIN" onPress={handleSubmit} />
+                <Buttons
+                  title="LOGIN"
+                  onPress={handleSubmit}
+                  containerStyle={{width: wp('85%')}}
+                />
               </View>
             </>
           )}
         </Formik>
       </View>
       <View style={styles.footer}>
-        <Text style={styles.footerText} onPress={makeCall}>
-          need an account? Call 6697 5686
-        </Text>
+        <Call />
       </View>
     </View>
   );
@@ -116,7 +117,7 @@ export default function LoginScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3b3733',
+    backgroundColor: TYPOGRAPHY.COLOR.Primary,
   },
   content: {
     flex: 0.9,
@@ -131,23 +132,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     alignItems: 'center',
   },
-  footerText: {
-    color: 'white',
-    paddingTop: hp('2%'),
-    fontFamily: 'Montserrat',
-    fontSize: 12,
-  },
   title: {
     color: 'white',
     paddingTop: hp('5%'),
-    fontFamily: 'Playfair Display',
+    fontFamily: TYPOGRAPHY.FONT.Playfair,
   },
   loginInput: {
     marginTop: hp('5%'),
   },
   loginInputStyle: {
     color: 'white',
-    fontFamily: 'Bebas Neue',
+    fontFamily: TYPOGRAPHY.FONT.BebasNeue,
   },
   loginInputContainer: {
     borderColor: 'white',
@@ -159,7 +154,7 @@ const styles = StyleSheet.create({
   },
   rememberText: {
     color: 'white',
-    fontFamily: 'Montserrat',
+    fontFamily: TYPOGRAPHY.FONT.Montserrat,
   },
   invalidText: {
     fontSize: 10,

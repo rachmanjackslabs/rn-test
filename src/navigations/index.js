@@ -1,9 +1,12 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 // import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Button, Icon} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
+
+import {TYPOGRAPHY} from '../styles/typography';
 
 import OpenScreen from '../pages/Open';
 import LoginScreen from '../pages/Login';
@@ -15,24 +18,50 @@ import CheckpointScreen from '../pages/Checkpoint';
 
 import TakePictureScreen from '../components/Camera';
 
-// const Tab = createBottomTabNavigator();
+/** Uncomment this code to use bottom bar */
+/* const Tab = createBottomTabNavigator();
 
-// Tab Navigator
-// const TabNavigator = ({navigation, route}) => {
-//   React.useLayoutEffect(() => {
-//     navigation.setOptions({headerTitle: getHeaderTitle(route)});
-//   }, [navigation, route]);
+Tab Navigator
+const TabNavigator = ({navigation, route}) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({headerTitle: getHeaderTitle(route)});
+  }, [navigation, route]);
 
-//   return (
-//     <Tab.Navigator>
-//       <Tab.Screen name="Open Page" component={OpenScreen} />
-//       <Tab.Screen name="Profile" component={ProfileScreen} />
-//     </Tab.Navigator>
-//   );
-// };
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Open Page" component={OpenScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}; */
+
+/** Component arror back button */
+const ButtonBackNavigation = ({navigation}) => {
+  return (
+    <Icon
+      name="chevron-left"
+      color="white"
+      onPress={() => navigation.goBack()}
+    />
+  );
+};
+
+/** Custom header button */
+const ButtonCustom = () => {
+  return (
+    <Button
+      onPress={() => alert('Forgot password page!')}
+      type="clear"
+      title="FORGOT?"
+      color={TYPOGRAPHY.COLOR.White}
+      titleStyle={styles.forgotTitle}
+    />
+  );
+};
 
 const Stack = createStackNavigator();
 
+/** Main route */
 const MainNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
@@ -49,31 +78,13 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'GET BACK',
           headerStyle: {
-            backgroundColor: '#3b3733',
+            backgroundColor: TYPOGRAPHY.COLOR.Primary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
+          headerTitleStyle: styles.headerTitle,
           headerBackTitle: ' ',
           headerTintColor: 'white',
-          headerRight: () => (
-            <Button
-              onPress={() => alert('Forgot password page!')}
-              type="clear"
-              title="FORGOT?"
-              color="#FFFFFF"
-              titleStyle={styles.forgotTitle}
-            />
-          ),
-          headerLeft: () => (
-            <Icon
-              name="chevron-left"
-              color="white"
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerRight: () => <ButtonCustom />,
+          headerLeft: () => <ButtonBackNavigation navigation={navigation} />,
         }}
       />
       <Stack.Screen
@@ -83,13 +94,9 @@ const MainNavigator = ({navigation}) => {
           headerLeft: false,
           title: 'HOME',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
+          headerTitleStyle: styles.headerTitle,
         }}
       />
       <Stack.Screen
@@ -98,20 +105,10 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'VEHICLE CHECK LIST',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Icon
-              name="chevron-left"
-              color="white"
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => <ButtonBackNavigation navigation={navigation} />,
         }}
       />
       <Stack.Screen
@@ -120,13 +117,9 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'SHIFT SCHEDULE',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
+          headerTitleStyle: styles.headerTitle,
           headerLeft: null,
         }}
       />
@@ -136,20 +129,10 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'TAKE A PICTURE',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Icon
-              name="chevron-left"
-              color="white"
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerTitleStyle: styles.headerTitle,
+          headerLeft: () => <ButtonBackNavigation navigation={navigation} />,
         }}
       />
       <Stack.Screen
@@ -158,13 +141,9 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'CASH IN TRANSIT',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
+          headerTitleStyle: styles.headerTitle,
           headerLeft: null,
         }}
       />
@@ -174,13 +153,9 @@ const MainNavigator = ({navigation}) => {
         options={{
           title: 'CHECKPOINT',
           headerStyle: {
-            backgroundColor: '#edb66d',
+            backgroundColor: TYPOGRAPHY.COLOR.Secondary,
           },
-          headerTitleStyle: {
-            fontFamily: 'Montserrat',
-            fontSize: 10,
-            color: 'white',
-          },
+          headerTitleStyle: styles.headerTitle,
           headerLeft: null,
         }}
       />
@@ -198,33 +173,31 @@ const RootNavigator = () => {
         component={MainNavigator}
         options={{headerShown: false}}
       />
-      {/* <Root.Screen
-        name="CreatePost"
-        component={CreatePostScreen}
-        options={{
-          headerLeft: false,
-        }}
-      /> */}
     </Root.Navigator>
   );
 };
 
-// Title for tab bottom bar
-// function getHeaderTitle(route) {
-//   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+/** Uncomment this code to fix bottom bar title */
+/* function getHeaderTitle(route) {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
 
-//   switch (routeName) {
-//     case 'Home':
-//       return 'Home';
-//     case 'Profile':
-//       return 'My profile';
-//   }
-// }
+  switch (routeName) {
+    case 'Home':
+      return 'Home';
+    case 'Profile':
+      return 'My profile';
+  }
+} */
 
 const styles = StyleSheet.create({
   forgotTitle: {
     fontSize: 10,
     fontFamily: 'Montserrat',
+    color: 'white',
+  },
+  headerTitle: {
+    fontFamily: 'Montserrat',
+    fontSize: 10,
     color: 'white',
   },
 });

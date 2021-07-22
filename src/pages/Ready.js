@@ -1,14 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Dimensions,
-  Linking,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import {View, StyleSheet, Dimensions, Linking} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,11 +8,11 @@ import {
 import {Text, Icon, Switch, Overlay} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
-import ButtonComponent from '../components/Button';
+import Buttons from '../components/Button';
 
 const {width} = Dimensions.get('screen');
 
-export default function ReadyScreen({navigation, route}) {
+export default function ReadyScreen({navigation}) {
   const [questionList, setQuestionList] = useState([
     {
       id: 1,
@@ -110,7 +102,7 @@ export default function ReadyScreen({navigation, route}) {
             })}
           </View>
           <View style={styles.buttonContainer}>
-            <ButtonComponent
+            <Buttons
               title="START SHIFT"
               onPress={startShift}
               iconRight={true}
@@ -152,7 +144,7 @@ export default function ReadyScreen({navigation, route}) {
           You were drinking before your shift. Please call Adrian on 0123456789.
         </Text>
         <View style={{alignItems: 'flex-end'}}>
-          <ButtonComponent
+          <Buttons
             title="Call now"
             onPress={callNow}
             containerStyle={{width: wp('35%'), marginTop: hp('5%')}}

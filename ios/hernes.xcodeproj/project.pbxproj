@@ -208,7 +208,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				CB1B6E6E5A87C04D40B86805 /* [CP] Embed Pods Frameworks */,
 				1084D5B8DBAFA13E7A2B53BF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -231,7 +230,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				88209F9BCBC782F6DD22A8C8 /* [CP] Embed Pods Frameworks */,
 				81B35151665F1AD83AC5DCBC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -370,40 +368,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hernes/Pods-hernes-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88209F9BCBC782F6DD22A8C8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hernes/Pods-hernes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hernes/Pods-hernes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hernes/Pods-hernes-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CB1B6E6E5A87C04D40B86805 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hernes-hernesTests/Pods-hernes-hernesTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-hernes-hernesTests/Pods-hernes-hernesTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-hernes-hernesTests/Pods-hernes-hernesTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CE783984DE46EB8D42B7690B /* [CP] Check Pods Manifest.lock */ = {
@@ -563,7 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FTGMZPALJ5;
+				DEVELOPMENT_TEAM = C53JF554NK;
 				INFOPLIST_FILE = hernes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -13,7 +13,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import ButtonComponent from '../components/Button';
+import Buttons from '../components/Button';
 
 const {width} = Dimensions.get('screen');
 
@@ -108,7 +108,7 @@ export default function ScheduleComponent(props) {
             )}
           </View>
         </View>
-        <ButtonComponent
+        <Buttons
           title="Arrived on site"
           onPress={arrivedOnSite}
           containerStyle={{width: wp('30%'), marginTop: hp('5%')}}
